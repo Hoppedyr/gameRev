@@ -4,40 +4,46 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'gameRev',
-    meta: [{
-        charset: 'utf-8'
+    title: "gameRev",
+    meta: [
+      {
+        charset: "utf-8"
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
+        name: "viewport",
+        content: "width=device-width, initial-scale=1"
       },
       {
-        hid: 'description',
-        name: 'description',
-        content: ''
+        hid: "description",
+        name: "description",
+        content: ""
       }
     ],
-    link: [{
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.png?v=3'
+    link: [
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.png?v=3"
       },
       {
         rel: "stylesheet",
         type: "text/css",
-        href: "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        href:
+          "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
       }
     ]
   },
-  script: [{
-      src: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js'
+  script: [
+    {
+      src:
+        "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
     },
     {
-      src: 'https://code.jquery.com/jquery-3.3.1.slim.min.js'
+      src: "https://code.jquery.com/jquery-3.3.1.slim.min.js"
     },
     {
-      src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'
+      src:
+        "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     }
   ],
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -55,17 +61,29 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    "@nuxtjs/axios",
     // https://go.nuxtjs.dev/content
-    '@nuxt/content',
+    "@nuxt/content"
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    headers: {
+      common: {
+        Accept: "application/json, text/plain, */*"
+      },
+      delete: {},
+      get: {},
+      head: {},
+      post: { "Content-Type": "application/json" },
+      put: {},
+      patch: {}
+    }
+  },
 
   // Content module configuration (https://go.nuxtjs.dev/content-config)
   content: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {}
-}
+};

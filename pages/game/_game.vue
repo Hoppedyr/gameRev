@@ -23,11 +23,12 @@
         </div>
 
         <div class="form-group">
-          <label for="inputBody">Write your review</label>
+          <label for="inputBody">Write a review</label>
           <textarea
             class="form-control"
             rows="3"
             v-model="review.body"
+            placeholder="Write a review of the game here..."
           ></textarea>
         </div>
 
@@ -120,8 +121,20 @@
           Submit review
         </button>
       </form>
+
+      <br />
       <div class="row"></div>
-      <div class="col">test</div>
+      <div v-for="review in reviews" :key="review.id" class="col">
+        <div class="card">
+          <div class="card-body">
+            <p>{{ review.userName }}</p>
+            <p>{{ review.country }}</p>
+            <p>{{ review.createdAt }}</p>
+            <p>{{ review.ratingScore }}</p>
+            <p>{{ review.body }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -133,7 +146,7 @@ import countries from "../../static/countries.json";
 export default {
   data() {
     return {
-      id: this.$route.query,
+      id: this.$route.query.id,
       countries,
       game: {},
       reviews: [],
@@ -149,7 +162,7 @@ export default {
   methods: {
     async fetchGame() {
       const game = await this.$axios.$get(
-        `https://api.rawg.io/api/games/${this.id.id}`
+        `https://api.rawg.io/api/games/${this.id}`
       );
       this.game = game;
       // console.log(this.game);
@@ -158,7 +171,7 @@ export default {
       let reviews;
 
       await this.$axios
-        .$get(`http://${apiUrl}/api/v1/reviews/game/${this.id.id}`)
+        .$get(`${apiUrl}/api/v1/reviews/game/${this.id}`)
         .then(function(response) {
           console.log(response);
           reviews = response;
@@ -182,11 +195,24 @@ export default {
         body: this.review.body
       };
 
-      const submitRes = await this.$axios.$post(
-        `${apiUrl}/api/v1/reviews`,
-        data
-      );
-      console.log(submitRes);
+      await this.$axios
+        .$post(`${apiUrl}/api/v1/reviews`, data)
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      this.fetchReviews();
+      this.resetForm();
+    },
+    resetForm() {
+      this.review = {
+        userName: null,
+        country: null,
+        ratingScore: null,
+        body: null
+      };
     }
   }
 };
