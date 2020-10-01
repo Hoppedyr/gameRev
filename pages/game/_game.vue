@@ -150,7 +150,13 @@ export default {
       countries,
       game: {},
       reviews: [],
-      review: { userName: null, country: null, ratingScore: null, body: null }
+      review: {
+        userName: null,
+        country: null,
+        ratingScore: null,
+        body: null,
+        countryJPG: null
+      }
     };
   },
 
@@ -168,17 +174,18 @@ export default {
       // console.log(this.game);
     },
     async fetchReviews() {
-      let reviews;
+      const reviews = await this.$axios.$get(
+        `${apiUrl}/api/v1/reviews/game/${this.id}`
+      );
 
-      await this.$axios
-        .$get(`${apiUrl}/api/v1/reviews/game/${this.id}`)
-        .then(function(response) {
-          console.log(response);
-          reviews = response;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      // get flag jpg for reviewers country
+      reviews.forEach(async review => {
+        // console.log(review);
+        const countryJPG = await this.$axios.$get(
+          `${apiUrl}/api/v1/flag/${review.country}`
+        );
+        review.countryJPG = countryJPG;
+      });
 
       this.reviews = reviews;
     },
