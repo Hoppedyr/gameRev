@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid bg-dark">
-    <h1 class="title">gameRev</h1>
+    <Navbar />
     <div class="row">
       <div v-for="game in games" :key="game.id" class="col-3 pb-2">
-        <div class="card bg-secondary">
+        <div class="card bg-secondary h-100">
           <nuxt-link :to="{ path: '/game', query: { id: game.id } }">
             <img
               :src="game.background_image"
