@@ -37,14 +37,18 @@
               v-for="country in countries"
               :key="country.index"
               v-bind:value="country.code"
-            >{{ country.name }}</option>
+              >{{ country.name }}</option
+            >
           </select>
         </div>
 
         <div class="form-group">
           <label for="ratingScore">Rate the game</label>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 1 }">
+            <label
+              class="btn btn-warning"
+              v-bind:class="{ active: review.ratingScore == 1 }"
+            >
               <input
                 type="radio"
                 name="options"
@@ -56,7 +60,10 @@
               />
               1
             </label>
-            <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 2 }">
+            <label
+              class="btn btn-warning"
+              v-bind:class="{ active: review.ratingScore == 2 }"
+            >
               <input
                 type="radio"
                 name="options"
@@ -66,7 +73,10 @@
               />
               2
             </label>
-            <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 3 }">
+            <label
+              class="btn btn-warning"
+              v-bind:class="{ active: review.ratingScore == 3 }"
+            >
               <input
                 type="radio"
                 name="options"
@@ -76,7 +86,10 @@
               />
               3
             </label>
-            <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 4 }">
+            <label
+              class="btn btn-warning"
+              v-bind:class="{ active: review.ratingScore == 4 }"
+            >
               <input
                 type="radio"
                 name="options"
@@ -86,7 +99,10 @@
               />
               4
             </label>
-            <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 5 }">
+            <label
+              class="btn btn-warning"
+              v-bind:class="{ active: review.ratingScore == 5 }"
+            >
               <input
                 type="radio"
                 name="options"
@@ -99,7 +115,9 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary" v-on:click="submit">Submit review</button>
+        <button type="button" class="btn btn-primary" v-on:click="submit">
+          Submit review
+        </button>
       </form>
 
       <br />
@@ -154,21 +172,19 @@ export default {
       // console.log(this.game);
     },
     async fetchReviews() {
+      this.reviews = [];
       const reviews = await this.$axios.$get(
         `${apiUrl}/api/v1/reviews/game/${this.id}`
       );
 
       // get flag jpg for reviewers country
       await reviews.forEach(async review => {
-        // console.log(review);
         const countryJPG = await this.$axios.$get(
           `${apiUrl}/api/v1/flag/${review.country}`
         );
         review.countryJPG = countryJPG;
-        console.log(review);
+        this.reviews.push(review);
       });
-
-      this.reviews = reviews;
     },
     reviewRate(rating) {
       this.review.ratingScore = rating;
@@ -191,8 +207,9 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-      // this.resetForm();
+
       this.fetchReviews();
+      this.resetForm();
     },
     resetForm() {
       this.review = {
