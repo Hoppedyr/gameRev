@@ -59,6 +59,12 @@ Backend PHPAdmin: [localhost:8082](http://localhost:8082)
 
 <br>
 
+REQUIREMENTS:
+
+- DOCKER - (https://www.docker.com/get-started)
+
+<br>
+
 ```bash
 # To start the application, simply cd into the root of the project
 # and run the docker container using this command in your terminal
