@@ -72,3 +72,6 @@ REQUIREMENTS:
 $ docker-compose up
 
 ```
+
+If the frontend container fails because of nuxt, then this might be because of your Docker setup. Docker Desktop should fix the issue.
+Otherwise you can also **npm install** yourself in the frontend folder.
