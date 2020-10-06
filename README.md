@@ -32,7 +32,7 @@ The API from rawg.io, only provides us with game data and nothing else.
 
 For the System Integration part, we have used a Java backend using Spring Boot. Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
 
-The backend is a REST-compliant RESTful API, that sends JSON as response.
+The backend is a REST API, that sends JSON as response.
 Using Axios in the frontend, we can call on the backend, and use CRUD operations on the database, which is built in MySQL.
 
 Our backend also communicates with a SOAP API that takes a country ISOCODE and returns that country's flag. We use this for our reviews, so reviewers and people reading reviews, can show and see which country the reviewer comes from.
