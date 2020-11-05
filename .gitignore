@@ -90,3 +90,4 @@ sw.*
 *.swp
 
 configs/config.json
+*/.ipynb_checkpoints
