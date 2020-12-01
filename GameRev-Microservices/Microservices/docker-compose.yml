@@ -1,0 +1,49 @@
+version: "2.4"
+services:
+  nodeexpressmongodb:
+    image: nodeexpressmongodb
+    build:
+      context: ./expressMongoCrud/ .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8080:8080
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+  elasticnode:
+    image: elasticnode
+    build:
+      context: ./Elastic-node/ .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+        - ELASTIC_URL=http://elasticsearch:9200
+    ports:
+      - 3000:3000
+    depends_on:
+      - elasticsearch
+    networks:
+      - esnet
+  elasticsearch:
+    container_name: tqd-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ports:
+      - 9300:9300
+      - 9200:9200
+    networks:
+      - esnet
+
+volumes:
+  data:
+
+networks:
+  esnet:
