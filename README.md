@@ -10,6 +10,8 @@
 
 gameRev is a game review platform, where people from all around the world can read and write reviews for their favorite games.
 
+![gameRev architectural diagram](GameRevArchitecturalDiagram.png)
+
 <br>
 
 ## Implementation & features
