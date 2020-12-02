@@ -49,6 +49,28 @@ Our Java backend uses PHPAdmin to communicate with the MySQL database, this tool
 
 <br>
 
+### BPMN
+
+We are using BPMN to check for profanities in our reviews, before they are posted.
+
+<br>
+
+### Webscraping - RabbitMQ
+
+We have used a python script to webscrape from SteamSpy, and retrieve game prices and how many units that the game has sold. We used RabbitMQ as the broker that takes care of the communication between our backend and our webscraper script.
+
+[Further Webscraping Documentation](https://github.com/Hoppedyr/gameRev/tree/main/GameRev-Webscraping)
+<br>
+
+### Microservices
+
+We have made a MongoDB CRUD application to make and save game guides, and we have made an Elastic Search Application that allows for implementing a search function that can search through game guides.
+
+[Further Microservices Documentation](https://github.com/Hoppedyr/gameRev/tree/main/GameRev-Microservices)
+
+<br>
+
+
 ## Build Setup
 
 Everything we have made has been put in a Docker Container, which will run everything needed.
@@ -77,3 +99,15 @@ $ docker-compose up
 
 If the frontend container fails because of nuxt, then this might be because of your Docker setup. Docker Desktop should fix the issue.
 Otherwise you can also **npm install** yourself in the frontend folder.
+
+## Monitoring & Logging
+
+To view logs and monitor the dockerized applications use this command in the root where the docker-compose.yml files are located:
+```bash
+$ docker-compose logs
+```
+
+If you want to monitor a single container use:
+```bash
+$ docker-compose logs container-name
+```
