@@ -2,6 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+
+
+const jsonData = require("./app/data/data.json")
+
 const app = express();
 
 var corsOptions = {
@@ -14,9 +18,12 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 const db = require("./app/models");
+const GameGuide = db.gameGuides;
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -24,6 +31,23 @@ db.mongoose
   })
   .then(() => {
     console.log("Connected to the database!");
+
+    jsonData.forEach(jsonObj => {
+      const gameGuide = new GameGuide({
+        guideName: jsonObj.guideName,
+        gameName: jsonObj.gameName,
+        description: jsonObj.description,
+        published: jsonObj.published,
+      });
+      gameGuide
+        .save(gameGuide)
+        .then(data => {
+          console.info("insert", data)
+        })
+        .catch(err => {
+          console.error(err)
+        });
+    })
   })
   .catch(err => {
     console.log("Cannot connect to the database!", err);
@@ -32,10 +56,13 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to gameRevCrud application." });
+  res.json({
+    message: "Welcome to gameRevCrud application."
+  });
 });
 
 require("./app/routes/turorial.routes")(app);
+require("./app/routes/gameGuide.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

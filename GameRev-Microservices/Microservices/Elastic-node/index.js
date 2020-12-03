@@ -58,16 +58,19 @@ app.get('/search', function (req, res) {
     size: 200,
     from: 0,
     query: {
-      match: {
-        description: req.query['q']
+      multi_match: {
+        query: req.query['q'],
+        fields: ['guideName', 'gameName'],
+        "fuzziness": "AUTO",
+        "prefix_length": 2
       }
     }
   }
   // perform the actual search passing in the index, the search query and the type
   client.search({
-      index: 'scotch.io-tutorial',
+      index: 'game-guide',
       body: body,
-      type: 'tutorials_list'
+      type: 'gameguides_list'
     })
     .then(results => {
       res.send(results.hits.hits);

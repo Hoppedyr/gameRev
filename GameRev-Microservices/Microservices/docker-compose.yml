@@ -9,12 +9,17 @@ services:
       NODE_ENV: production
     ports:
       - 8080:8080
+    networks:
+      - esnet
   mongodb:
     image: mongo:latest
     ports:
       - 27017:27017
     volumes:
       - data:/data/db
+    networks:
+      - esnet
+
   elasticnode:
     image: elasticnode
     build:

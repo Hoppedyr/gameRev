@@ -5,7 +5,7 @@
 <div class="container" id="app">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h1>Search Tutorials List around the world</h1>
+            <h1>Search game guides List around the world</h1>
         </div>
     </div>
     <div class="row">
@@ -24,11 +24,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                 <!-- display the city name and country  -->
-                    {{ result._source.title }}, {{ result._source.description }}
+                    {{ result._source.guideName }}, {{ result._source.gameName }}
                 </div>
                 <div class="panel-body">
                 <!-- display the latitude and longitude of the city  -->
-                    <p>lat:{{ result._source.lat }}, long: {{ result._source.lng }}.</p>
+                    <p>lat:{{ result._source.description }}, long: {{ result._source.published }}.</p>
                 </div>
             </div>
         </div>
