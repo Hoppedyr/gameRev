@@ -2,7 +2,7 @@
 const elasticsearch = require('elasticsearch');
 
 // instantiate an elasticsearch client
-const elasticUrl = process.env.ELASTIC_URL || "http://192.168.99.100:9200";
+const elasticUrl = process.env.ELASTIC_URL || "http://tqd-elasticsearch:9200";
 const client = new elasticsearch.Client({
   hosts: [elasticUrl]
 });
@@ -32,7 +32,7 @@ client.ping({
 // use the bodyparser as a middleware
 app.use(bodyParser.json())
 // set port for the app to listen on
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 9000);
 // set path to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 // enable CORS

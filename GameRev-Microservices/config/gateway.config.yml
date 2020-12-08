@@ -1,5 +1,5 @@
 http:
-  port: 8080
+  port: 8100
 admin:
   port: 9876
   host: localhost
@@ -7,14 +7,19 @@ apiEndpoints:
   api:
     host: localhost
     paths: "/ip"
-  tutorial:
+  gameguide:
     host: localhost
-    paths: ["/api/tutorials", "/api/tutorials/*"]
+    paths: ["/api/gameguide", "/api/gameguide/*"]
+  elastic:
+    host: localhost
+    paths: ["/search", "/search/*"]
 serviceEndpoints:
   httpbin:
     url: "https://httpbin.org"
-  tutorialsService:
-    url: "http://192.168.99.100:8080"
+  gameguideService:
+    url: "http://192.168.99.100:8200"
+  elasticService:
+    url: "http://192.168.99.100:9000"
 policies:
   - basic-auth
   - cors
@@ -35,13 +40,23 @@ pipelines:
           - action:
               serviceEndpoint: httpbin
               changeOrigin: true
-  tutorialsPipelines:
+  gameguidePipelines:
     apiEndpoints:
-      - tutorial
+      - gameguide
     policies:
       # Uncomment `key-auth:` when instructed to in the Getting Started guide.
       # - key-auth:
       - proxy:
           - action:
-              serviceEndpoint: tutorialsService
+              serviceEndpoint: gameguideService
+              changeOrigin: true
+  elasticPipelines:
+    apiEndpoints:
+      - elastic
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: elasticService
               changeOrigin: true

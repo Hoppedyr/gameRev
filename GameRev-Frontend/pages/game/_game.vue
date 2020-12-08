@@ -136,22 +136,21 @@
                   {{ review.userName }}
                 </h3>
 
-                <p class="card-text">
-                  <p>RatingScore: {{ review.ratingScore }} </p>
-                 <p>
-              {{
-                new Date(review.createdAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric"
-                })
-              }}
-            </p>
-                  <p>Review:</p>
-                  {{ review.body }}
+                <p class="card-text"></p>
+                <p>RatingScore: {{ review.ratingScore }}</p>
+                <p>
+                  {{
+                    new Date(review.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    })
+                  }}
                 </p>
+                <p>Review:</p>
+                {{ review.body }}
               </div>
             </div>
           </div>

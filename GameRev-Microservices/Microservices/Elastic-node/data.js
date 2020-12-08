@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const elasticsearch = require('elasticsearch');
 // instantiate an Elasticsearch client
 
-const elasticUrl = process.env.ELASTIC_URL || "http://192.168.99.100:9200";
+const elasticUrl = process.env.ELASTIC_URL || "http://tqd-elasticsearch:9200";
 
 const client = new elasticsearch.Client({
     hosts: [elasticUrl]
@@ -55,7 +55,7 @@ async function getData() {
         method: 'GET',
         redirect: 'follow'
     };
-    const gameguides = await fetch("http://192.168.99.100:8080/api/gameguide", requestOptions)
+    const gameguides = await fetch("http://nodeexpressmongodb:8200/api/gameguide", requestOptions)
         .then(response => {
             return response.json()
         })
