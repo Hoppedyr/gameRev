@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("gameRevWebscraper")
+    @Value("${spring.rabbitmq.queueName}")
     String queueName;
 
     @Value("${spring.rabbitmq.username}")
@@ -35,6 +35,7 @@ public class RabbitMQConfig {
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
         simpleMessageListenerContainer.setQueues(queue());
         simpleMessageListenerContainer.setMessageListener(new WebscrapeListener());
+        System.out.println(queueName);
         return simpleMessageListenerContainer;
 
     }
@@ -42,9 +43,10 @@ public class RabbitMQConfig {
     //create custom connection factory
 	@Bean
 	ConnectionFactory connectionFactory() {
-		CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("localhost");
+		CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("rabbitmq");
 		cachingConnectionFactory.setUsername(username);
 		cachingConnectionFactory.setUsername(password);
+        System.out.println(queueName);
 		return cachingConnectionFactory;
 	}
 
@@ -55,6 +57,7 @@ public class RabbitMQConfig {
 		simpleMessageListenerContainer.setConnectionFactory(connectionFactory());
 		simpleMessageListenerContainer.setQueues(queue());
 		simpleMessageListenerContainer.setMessageListener(new WebscrapeListener());
+        System.out.println(queueName);
 		return simpleMessageListenerContainer;
 
 	}

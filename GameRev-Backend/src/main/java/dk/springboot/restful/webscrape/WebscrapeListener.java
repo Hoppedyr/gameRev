@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 import java.util.ArrayList;
 
@@ -21,19 +22,31 @@ import java.util.ArrayList;
 @Service
 public class WebscrapeListener implements MessageListener {
 
-    private static ArrayList<JSONObject> messages = new ArrayList<>();
+    private static ArrayList<String> messages = new ArrayList<>();
 
     @GetMapping
-    public ResponseEntity<ArrayList<JSONObject>> getRabbitMQMessages() {
+    public ResponseEntity<ArrayList<String>> getRabbitMQMessages() {
         return ResponseEntity.ok(messages);
     }
 
     @SneakyThrows
+    @RabbitListener(queues = "gameRevWebscraper")
     public void onMessage(Message message) {
 
-        JSONObject jsonBody = new JSONObject(new String(message.getBody()));
-        messages.add(jsonBody);
+        System.out.println("HEEEEEEEEEEY");
+        System.out.println("HEEEEEEEEEEY");
+        System.out.println("HEEEEEEEEEEY");
+//        JSONObject jsonBody = new JSONObject(new String(message.getBody()));
+//        messages.add(jsonBody);
+        messages.add(message.toString());
         System.out.println("Consuming Message - " + new String(message.getBody()));
     }
-}
 
+    @RabbitListener(queues = "gameRevWebscraper")
+    public void receiveMessage(Message message) {
+        System.out.println("Received Message:" + message);
+        System.out.println();
+//        JSONObject jsonBody = new JSONObject(new String(message.getBody()));
+        messages.add(message.toString());
+    }
+}
