@@ -6,7 +6,6 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +34,6 @@ public class RabbitMQConfig {
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
         simpleMessageListenerContainer.setQueues(queue());
         simpleMessageListenerContainer.setMessageListener(new WebscrapeListener());
-        System.out.println(queueName);
         return simpleMessageListenerContainer;
 
     }
@@ -46,7 +44,6 @@ public class RabbitMQConfig {
 		CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("rabbitmq");
 		cachingConnectionFactory.setUsername(username);
 		cachingConnectionFactory.setUsername(password);
-        System.out.println(queueName);
 		return cachingConnectionFactory;
 	}
 
@@ -57,7 +54,6 @@ public class RabbitMQConfig {
 		simpleMessageListenerContainer.setConnectionFactory(connectionFactory());
 		simpleMessageListenerContainer.setQueues(queue());
 		simpleMessageListenerContainer.setMessageListener(new WebscrapeListener());
-        System.out.println(queueName);
 		return simpleMessageListenerContainer;
 
 	}

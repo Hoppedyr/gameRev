@@ -9,44 +9,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
-import java.util.ArrayList;
 
 @RestController
-@RequestMapping("api/v1/webscrape")
+@RequestMapping(value = "api/v1/webscrape", produces = "application/json")
 @Slf4j
 @RequiredArgsConstructor
 
 @Service
 public class WebscrapeListener implements MessageListener {
 
-    private static ArrayList<String> messages = new ArrayList<>();
+    private static String webscrapeMessage = "";
 
     @GetMapping
-    public ResponseEntity<ArrayList<String>> getRabbitMQMessages() {
-        return ResponseEntity.ok(messages);
+    public ResponseEntity<String> getLatestRabbitMQMessage() {
+        return ResponseEntity.ok(webscrapeMessage);
     }
 
     @SneakyThrows
-    @RabbitListener(queues = "gameRevWebscraper")
+    @RabbitListener(queues = "webscrapeData")
     public void onMessage(Message message) {
-
-        System.out.println("HEEEEEEEEEEY");
-        System.out.println("HEEEEEEEEEEY");
-        System.out.println("HEEEEEEEEEEY");
-//        JSONObject jsonBody = new JSONObject(new String(message.getBody()));
-//        messages.add(jsonBody);
-        messages.add(message.toString());
-        System.out.println("Consuming Message - " + new String(message.getBody()));
-    }
-
-    @RabbitListener(queues = "gameRevWebscraper")
-    public void receiveMessage(Message message) {
-        System.out.println("Received Message:" + message);
-        System.out.println();
-//        JSONObject jsonBody = new JSONObject(new String(message.getBody()));
-        messages.add(message.toString());
+        try {
+            webscrapeMessage = new String(message.getBody());
+        }catch (Exception err) {
+            System.out.println(err);
+        }
     }
 }

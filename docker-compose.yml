@@ -1,6 +1,17 @@
 version: '3'
 services:
 
+  frontend:
+    container_name: nuxtfrontend
+    image: node:14.13.0-stretch
+    command: npm run dev
+    volumes:
+      - ./gameRev-Frontend:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: 0.0.0.0
 
   mysql:
     container_name: mysql
@@ -49,5 +60,6 @@ services:
       - 15691:15691
       - 15692:15692
       - 25672:25672
+
 volumes:
   db_data:
