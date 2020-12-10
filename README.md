@@ -70,7 +70,6 @@ We have made a MongoDB CRUD application to make and save game guides, and we hav
 
 <br>
 
-
 ## Build Setup
 
 Everything we have made has been put in a Docker Container, which will run everything needed.
@@ -89,25 +88,57 @@ REQUIREMENTS:
 
 <br>
 
-```bash
-# To start the application, simply cd into the root of the project
-# and run the docker container using this command in your terminal
+### STEP 1:
 
-$ docker-compose up
+```bash
+# To start the application, simply cd into the root of the project /gameRev
+# and follow these instructions
+
+$ docker-compose up -d
+```
+
+### STEP 2:
+
+```bash
+# now we need to start the API Client that connects the frontend to the microservices
+
+$ cd GameRev-Microservices/
+
+# run this command and leave the console running
+$ npm install && npm start
 
 ```
+
+### STEP 3:
+
+Go to the root project folder and run
+the file [indexing_and_webscrapingjob.bat](indexing_and_webscrapingjob.bat)
+
+OR
+
+```bash
+# this command imports data and indexes it in Elastic Search
+$ docker exec -it gamerev_elasticnode_1 node data.js
+
+# this command starts our webscraping job, that runs every 10 min, so keep it running
+$ python GameRev-Webscraping/GameRevWebscrape.py
+```
+
+<br>
 
 If the frontend container fails because of nuxt, then this might be because of your Docker setup. Docker Desktop should fix the issue.
 Otherwise you can also **npm install** yourself in the frontend folder.
 
 ## Monitoring & Logging
 
-To view logs and monitor the dockerized applications use this command in the root where the docker-compose.yml files are located:
+To view logs and monitor the dockerized applications use this command in root where the docker-compose.yml file is located:
+
 ```bash
 $ docker-compose logs
 ```
 
 If you want to monitor a single container use:
+
 ```bash
 $ docker-compose logs container-name
 ```

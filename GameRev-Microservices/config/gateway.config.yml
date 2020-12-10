@@ -17,9 +17,9 @@ serviceEndpoints:
   httpbin:
     url: "https://httpbin.org"
   gameguideService:
-    url: "http://192.168.99.100:8200"
+    url: "http://localhost:8200"
   elasticService:
-    url: "http://192.168.99.100:9000"
+    url: "http://localhost:9000"
 policies:
   - basic-auth
   - cors
