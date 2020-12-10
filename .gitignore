@@ -91,3 +91,4 @@ sw.*
 
 configs/config.json
 */.ipynb_checkpoints
+.docker
