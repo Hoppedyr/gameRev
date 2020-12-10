@@ -1,6 +1,5 @@
-version: '3'
+version: "3"
 services:
-
   frontend:
     container_name: nuxtfrontend
     image: node:14.13.0-stretch
@@ -21,9 +20,9 @@ services:
     environment:
       MYSQL_DATABASE: root
       MYSQL_ROOT_PASSWORD: app
-      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_HOST: "%"
     ports:
-    - "3306:3306"
+      - "3306:3306"
     restart: always
 
   phpmyadmin:
@@ -33,24 +32,23 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
-      - '8082:80'
+      - "8082:80"
     environment:
       PMA_HOST: mysql
- 
+
   springbootintegration:
     build: .
     volumes:
-    - ./gameRev-Backend:/app
-    - ~/.m2:/root/.m2
+      - ./gameRev-Backend:/app
+      - ~/.m2:/root/.m2
     working_dir: /app
     ports:
-    - 8080:8080
+      - 8080:8080
     command: mvn clean spring-boot:run
     environment:
       - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
-    - mysql
-
+      - mysql
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -60,6 +58,55 @@ services:
       - 15691:15691
       - 15692:15692
       - 25672:25672
+  nodeexpressmongodb:
+    image: nodeexpressmongodb
+    build:
+      context: ./GameRev-Microservices/Microservices/expressMongoCrud/ .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8200:8200
+    networks:
+      - esnet
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+    networks:
+      - esnet
+  elasticnode:
+    image: elasticnode
+    build:
+      context: ./GameRev-Microservices/Microservices/Elastic-node/ .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+        - ELASTIC_URL=http://elasticsearch:9200
+    ports:
+      - 9000:9000
+    depends_on:
+      - elasticsearch
+    networks:
+      - esnet
+  elasticsearch:
+    container_name: tqd-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ports:
+      - 9300:9300
+      - 9200:9200
+    networks:
+      - esnet
+
+networks:
+  esnet:
 
 volumes:
   db_data:
+  data:
