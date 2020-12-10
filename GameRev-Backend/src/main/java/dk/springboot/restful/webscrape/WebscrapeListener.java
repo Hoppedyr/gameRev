@@ -6,6 +6,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "api/v1/webscrape", produces = "application/json")
 @Slf4j
 @RequiredArgsConstructor

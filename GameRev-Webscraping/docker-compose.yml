@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  gamerevwebscraping:
+    image: gamerevwebscraping
+    build:
+      context: .
+      dockerfile: ./Dockerfile
