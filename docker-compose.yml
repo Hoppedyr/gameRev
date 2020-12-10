@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   frontend:
     container_name: nuxtfrontend
@@ -8,7 +8,7 @@ services:
       - ./gameRev-Frontend:/usr/src/app
     working_dir: /usr/src/app
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       HOST: 0.0.0.0
 
@@ -20,9 +20,9 @@ services:
     environment:
       MYSQL_DATABASE: root
       MYSQL_ROOT_PASSWORD: app
-      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_HOST: '%'
     ports:
-      - "3306:3306"
+      - '3306:3306'
     restart: always
 
   phpmyadmin:
@@ -32,7 +32,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
-      - "8082:80"
+      - '8082:80'
     environment:
       PMA_HOST: mysql
 
@@ -49,6 +49,7 @@ services:
       - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mysql
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -58,6 +59,7 @@ services:
       - 15691:15691
       - 15692:15692
       - 25672:25672
+
   nodeexpressmongodb:
     image: nodeexpressmongodb
     build:
@@ -69,6 +71,7 @@ services:
       - 8200:8200
     networks:
       - esnet
+
   mongodb:
     image: mongo:latest
     ports:
@@ -77,6 +80,7 @@ services:
       - data:/data/db
     networks:
       - esnet
+
   elasticnode:
     image: elasticnode
     build:
@@ -91,12 +95,13 @@ services:
       - elasticsearch
     networks:
       - esnet
+
   elasticsearch:
     container_name: tqd-elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
     environment:
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
       - discovery.type=single-node
     ports:
       - 9300:9300
