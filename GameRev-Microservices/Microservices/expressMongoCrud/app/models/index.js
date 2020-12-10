@@ -8,5 +8,6 @@ db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.tutorials = require("./tutorial.model.js")(mongoose);
 db.games = require("./games.model")(mongoose);
+db.gameGuides = require("./gameGuide.model")(mongoose);
 
 module.exports = db;

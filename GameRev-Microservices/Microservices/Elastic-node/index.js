@@ -2,7 +2,7 @@
 const elasticsearch = require('elasticsearch');
 
 // instantiate an elasticsearch client
-const elasticUrl = process.env.ELASTIC_URL || "http://192.168.99.100:9200";
+const elasticUrl = process.env.ELASTIC_URL || "http://tqd-elasticsearch:9200";
 const client = new elasticsearch.Client({
   hosts: [elasticUrl]
 });
@@ -32,7 +32,7 @@ client.ping({
 // use the bodyparser as a middleware
 app.use(bodyParser.json())
 // set port for the app to listen on
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 9000);
 // set path to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 // enable CORS
@@ -58,16 +58,19 @@ app.get('/search', function (req, res) {
     size: 200,
     from: 0,
     query: {
-      match: {
-        description: req.query['q']
+      multi_match: {
+        query: req.query['q'],
+        fields: ['guideName', 'gameName'],
+        "fuzziness": "AUTO",
+        "prefix_length": 2
       }
     }
   }
   // perform the actual search passing in the index, the search query and the type
   client.search({
-      index: 'scotch.io-tutorial',
+      index: 'game-guide',
       body: body,
-      type: 'tutorials_list'
+      type: 'gameguides_list'
     })
     .then(results => {
       res.send(results.hits.hits);

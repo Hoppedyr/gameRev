@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const elasticsearch = require('elasticsearch');
 // instantiate an Elasticsearch client
 
-const elasticUrl = process.env.ELASTIC_URL || "http://192.168.99.100:9200";
+const elasticUrl = process.env.ELASTIC_URL || "http://tqd-elasticsearch:9200";
 
 const client = new elasticsearch.Client({
     hosts: [elasticUrl]
@@ -23,7 +23,7 @@ client.ping({
 
 // create a new index called scotch.io-tutorial. If the index has already been created, this function fails safely
 client.indices.create({
-    index: 'scotch.io-tutorial'
+    index: 'game-guide'
 }, function (error, response, status) {
     if (error) {
         //console.log(error);
@@ -33,9 +33,9 @@ client.indices.create({
 });
 // add a data to the index that has already been created
 client.index({
-    index: 'scotch.io-tutorial',
+    index: 'game-guide',
     id: '1',
-    type: 'tutorials_list',
+    type: 'gameguides_list',
     body: {
         "Key1": "Content for key one",
         "Key2": "Content for key two",
@@ -55,37 +55,33 @@ async function getData() {
         method: 'GET',
         redirect: 'follow'
     };
-    const tutorials = await fetch("http://192.168.99.100:8080/api/tutorials", requestOptions)
+    const gameguides = await fetch("http://nodeexpressmongodb:8200/api/gameguide", requestOptions)
         .then(response => {
             return response.json()
         })
         .catch(error => console.log('error', error));
-    index(tutorials);
+    index(gameguides);
 }
 
-function index(tutorials) {
-    // declare an empty array called bulk
+function index(gameguides) {
     var bulk = [];
-    //loop through each city and create and push two objects into the array in each loop
-    //first object sends the index and type you will be saving the data as
-    //second object is the data you want to index
-    tutorials.forEach(city => {
+    gameguides.forEach(gameguide => {
         bulk.push({
             index: {
-                _index: "scotch.io-tutorial",
-                _type: "tutorials_list",
+                _index: "game-guide",
+                _type: "gameguides_list",
             }
         })
-        bulk.push(city)
+        bulk.push(gameguide)
     })
     //perform bulk indexing of the data passed
     client.bulk({
         body: bulk
     }, function (err, response) {
         if (err) {
-            console.log("Failed Bulk operation", err)
+            console.error("Failed Bulk operation", err)
         } else {
-            console.log("Successfully imported %s", tutorials.length);
+            console.info("Successfully imported %s", gameguides.length);
         }
     });
 }

@@ -9,7 +9,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 8080:8080
+      - 8200:8200
     volumes:
       - .:/usr/src/app
   mongodb:
