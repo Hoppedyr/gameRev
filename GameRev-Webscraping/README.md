@@ -22,6 +22,9 @@ and also so we can demonstrate the use of RabbitMQ. We want to be able to exchan
 After webscraping, our application dumps the data as json, and publishes it to RabbitMQ, so other application in different languages can listen and use the data.
 For demonstration we have written a separate python receiver, that can listen to RabbitMQ and read the data. This example demonstrates MOM.
 
+#### Diagram over our Message Broker architecture
+![GameRev MOM diagram](gamerev-mom-diagram.png)
+
 ### Installation - what you need
  * RabbitMQ - you need this open and ready, we used it locally using a Docker file. 
  
