@@ -103,6 +103,7 @@ Login credentials:
 REQUIREMENTS:
 
 - DOCKER - (https://www.docker.com/get-started)
+- NODE - (https://nodejs.org/en/download/)
 
 <br>
 
