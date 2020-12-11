@@ -19,15 +19,13 @@ Then we have a microservice setup, that combines the two microservices nodeCRUD 
 
 ## Implementation & features
 
-<br>
-
 ### Frontend
 
 We have developed a client frontend using Vue.js combined with the Nuxt.js framework. The frontend uses Vue, Nuxt, HTML and CSS with bootstrap, to create a frontpage, that serves the client with several popular games.
 
 A client can then click on a game, and see more details, including other people's reviews. The client can also write their own reviews, and give a rating between 1-5 stars.
 
-Our frontend's only function is to display data served by our backend, but we have also used our frontend to fetch from the rawg.io API.
+Our frontend's only function is to display data served by our backend and our microservices/components, but we have also used our frontend to fetch from the rawg.io API.
 The API from rawg.io, only provides us with game data and nothing else.
 
 Some newer features that have been added to gameRev's platform, include a game guide and a game price section. The game guides offers access to a section where users can search for game guides and read them. The game price section displays a list of games, including info like the current steam price, and the number of units sold. The game price data is fetched every 10 minutes, to keep the users updated on the latest prices and information.
@@ -43,7 +41,7 @@ Using Axios in the frontend, we can call on the backend, and use CRUD operations
 
 Our backend also communicates with a SOAP API that takes a country ISOCODE and returns that country's flag. We use this for our reviews, so reviewers and people reading reviews, can show and see which country the reviewer comes from.
 
-So we have a frontend client, a backend that consumes SOAP requests and itself communicates using REST.
+So we have a backend that consumes SOAP requests and itself communicates using REST with other services. One exception is AMQP that the backend communicates with RabbitMQ in.
 
 <br>
 
@@ -61,7 +59,7 @@ We are using BPMN to check for profanities in our reviews, before they are poste
 
 ### Webscraping - RabbitMQ
 
-We have used a python script to webscrape from SteamSpy, and retrieve game prices and how many units that the game has sold. We used RabbitMQ as the broker that takes care of the communication between our backend and our webscraper script.
+We have used a python script to webscrape from SteamSpy, and retrieve game prices and how many units that the game has sold. We used RabbitMQ as the broker that takes care of the communication between our backend and our webscraper script using the AMQP protocol.
 
 [Further Webscraping Documentation](https://github.com/Hoppedyr/gameRev/tree/main/GameRev-Webscraping)
 <br>
@@ -76,13 +74,29 @@ We have made a MongoDB CRUD application to make and save game guides, and we hav
 
 ## Build Setup
 
-Everything we have made has been put in a Docker Container, which will run everything needed.
+### Everything we have made has been put in a Docker Container, which will run everything needed.
 
 Frontend: [localhost:3000](http://localhost:3000)  
 Backend API: [localhost:8080](http://localhost:8080)  
 Backend PHPAdmin: [localhost:8082](http://localhost:8082)
+MySQL DB: [localhost:3306](http://localhost:3306)
+RabbitMQ Server: [localhost:15672](http://localhost:15762)
+NodeCRUD Mongo Microservice: [localhost:8200](http://localhost:8200)
+MongoDB: [localhost:27017](http://localhost:27017)
+NodeElasticSearch Microservice: [localhost:9000](http://localhost:9000)
+Elastic Search: [localhost:9200](http://localhost:9200)
+MongoDB: [localhost:27017](http://localhost:27017)
 
+
+### Non-Dockerized Services:
+
+API Gateway: [localhost:8100](http://localhost:8100)
+
+
+
+Login credentials:
 - PHPAdmin (username: root, password: app)
+- RabbitMQ (username: guest, password: guest)
 
 <br>
 
