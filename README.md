@@ -76,21 +76,21 @@ We have made a MongoDB CRUD application to make and save game guides, and we hav
 
 ### Everything we have made has been put in a Docker Container, which will run everything needed.
 
-Frontend: [localhost:3000](http://localhost:3000)  
-Backend API: [localhost:8080](http://localhost:8080)  
-Backend PHPAdmin: [localhost:8082](http://localhost:8082)
-MySQL DB: [localhost:3306](http://localhost:3306)
-RabbitMQ Server: [localhost:15672](http://localhost:15762)
-NodeCRUD Mongo Microservice: [localhost:8200](http://localhost:8200)
-MongoDB: [localhost:27017](http://localhost:27017)
-NodeElasticSearch Microservice: [localhost:9000](http://localhost:9000)
-Elastic Search: [localhost:9200](http://localhost:9200)
-MongoDB: [localhost:27017](http://localhost:27017)
+- Frontend: [localhost:3000](http://localhost:3000)  
+- Backend API: [localhost:8080](http://localhost:8080)  
+- Backend PHPAdmin: [localhost:8082](http://localhost:8082)
+- MySQL DB: [localhost:3306](http://localhost:3306)
+- RabbitMQ Server: [localhost:15672](http://localhost:15762)
+- NodeCRUD Mongo Microservice: [localhost:8200](http://localhost:8200)
+- MongoDB: [localhost:27017](http://localhost:27017)
+- NodeElasticSearch Microservice: [localhost:9000](http://localhost:9000)
+- Elastic Search: [localhost:9200](http://localhost:9200)
+- MongoDB: [localhost:27017](http://localhost:27017)
 
 
 ### Non-Dockerized Services:
 
-API Gateway: [localhost:8100](http://localhost:8100)
+- API Gateway: [localhost:8100](http://localhost:8100)
 
 
 
