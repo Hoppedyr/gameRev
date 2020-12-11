@@ -8,9 +8,11 @@
 
 # gameRev
 
-gameRev is a game review platform, where people from all around the world can read and write reviews for their favorite games.
+gameRev is a game review platform, where people from all around the world can read and write reviews for their favorite games. New features include game guides and game prices.
 
 ![gameRev architectural diagram](GameRevArchitecturalDiagram.png)
+
+This architecural diagram shows our architecture, and how our different applications communicate. We have a monolithic application, that includes our frontend, backend and our database. Then we have a microservice setup, that combines the two microservices 
 
 <br>
 
@@ -25,8 +27,9 @@ We have developed a client frontend using Vue.js combined with the Nuxt.js frame
 A client can then click on a game, and see more details, including other people's reviews. The client can also write their own reviews, and give a rating between 1-5 stars.
 
 Our frontend's only function is to display data served by our backend, but we have also used our frontend to fetch from the rawg.io API.
-
 The API from rawg.io, only provides us with game data and nothing else.
+
+Some newer features that have been added to gameRev's platform, include a game guide and a game price section. The game guides offers access to a section where users can search for game guides and read them. The game price section displays a list of games, including info like the current steam price, and the number of units sold. The game price data is fetched every 10 minutes, to keep the users updated on the latest prices and information.
 
 <br>
 
@@ -100,7 +103,7 @@ $ docker-compose up -d
 ### STEP 2:
 
 ```bash
-# now we need to start the API Client that connects the frontend to the microservices
+# now we need to start the API Gateway that connects the frontend to the microservices
 
 $ cd GameRev-Microservices/
 
