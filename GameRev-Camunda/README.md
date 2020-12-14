@@ -24,4 +24,4 @@ Congratz it work.
 Where does this come to context with our exam project?
 Our exam project is about games and game reviews, so when a user tries to make a review for a game this process will be triggered and the admin will be looking at the review.
 
-The integration has not yet been integrated into the main project which is the exam project.
+![bpmn process diagram](/GameRev-Camunda/camunda_bpmn_process.png)
