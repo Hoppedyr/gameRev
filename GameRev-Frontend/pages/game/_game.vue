@@ -26,7 +26,7 @@
             <textarea
               class="form-control"
               rows="3"
-              v-model="review.body"
+              v-model="review.review"
               placeholder="Write a review of the game here..."
             ></textarea>
           </div>
@@ -38,19 +38,14 @@
                 v-for="country in countries"
                 :key="country.index"
                 v-bind:value="country.code"
-              >
-                {{ country.name }}
-              </option>
+              >{{ country.name }}</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="ratingScore">Rate the game</label>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label
-                class="btn btn-warning"
-                v-bind:class="{ active: review.ratingScore == 1 }"
-              >
+              <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 1 }">
                 <input
                   type="radio"
                   name="options"
@@ -62,10 +57,7 @@
                 />
                 1
               </label>
-              <label
-                class="btn btn-warning"
-                v-bind:class="{ active: review.ratingScore == 2 }"
-              >
+              <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 2 }">
                 <input
                   type="radio"
                   name="options"
@@ -75,10 +67,7 @@
                 />
                 2
               </label>
-              <label
-                class="btn btn-warning"
-                v-bind:class="{ active: review.ratingScore == 3 }"
-              >
+              <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 3 }">
                 <input
                   type="radio"
                   name="options"
@@ -88,10 +77,7 @@
                 />
                 3
               </label>
-              <label
-                class="btn btn-warning"
-                v-bind:class="{ active: review.ratingScore == 4 }"
-              >
+              <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 4 }">
                 <input
                   type="radio"
                   name="options"
@@ -101,10 +87,7 @@
                 />
                 4
               </label>
-              <label
-                class="btn btn-warning"
-                v-bind:class="{ active: review.ratingScore == 5 }"
-              >
+              <label class="btn btn-warning" v-bind:class="{ active: review.ratingScore == 5 }">
                 <input
                   type="radio"
                   name="options"
@@ -117,18 +100,12 @@
             </div>
           </div>
 
-          <button type="button" class="btn btn-primary" v-on:click="submit">
-            Submit review
-          </button>
+          <button type="button" class="btn btn-primary" v-on:click="submit">Submit review</button>
         </form>
 
         <br />
         <div class="row">
-          <div
-            v-for="review in reviews"
-            :key="review.id"
-            class="col-6 text-white py-2"
-          >
+          <div v-for="review in reviews" :key="review.id" class="col-6 text-white py-2">
             <div class="card h-100 bg-secondary">
               <div class="card-body">
                 <h3 class="card-title">
@@ -140,17 +117,17 @@
                 <p>RatingScore: {{ review.ratingScore }}</p>
                 <p>
                   {{
-                    new Date(review.createdAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                    })
+                  new Date(review.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  })
                   }}
                 </p>
                 <p>Review:</p>
-                {{ review.body }}
+                {{ review.review }}
               </div>
             </div>
           </div>
@@ -176,8 +153,8 @@ export default {
         country: null,
         ratingScore: null,
         body: null,
-        countryJPG: null,
-      },
+        countryJPG: null
+      }
     };
   },
 
@@ -201,7 +178,7 @@ export default {
       );
 
       // get flag jpg for reviewers country
-      await reviews.forEach(async (review) => {
+      await reviews.forEach(async review => {
         const countryJPG = await this.$axios.$get(
           `${apiUrl}/api/v1/flag/${review.country}`
         );
@@ -219,17 +196,62 @@ export default {
         userName: this.review.userName,
         country: this.review.country,
         ratingScore: this.review.ratingScore,
-        body: this.review.body,
+        review: this.review.review
       };
 
+      // await this.$axios
+      //   .$post(`${apiUrl}/api/v1/reviews`, data)
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+
+      const url = `http://localhost:8100/engine-rest/process-definition/key/profanity-validation/start`;
+      // const url = `http://localhost:8100/engine-rest/process-definition/key/profanity-validation/start`;
+      const methodParam = {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          variables: {
+            game_id: {
+              value: data.game_id,
+              type: "string"
+            },
+            review: {
+              value: data.review,
+              type: "string"
+            },
+            country: {
+              value: data.country,
+              type: "string"
+            },
+            ratingScore: {
+              value: data.ratingScore,
+              type: "string"
+            },
+            userName: {
+              value: data.userName,
+              type: "string"
+            }
+          }
+        })
+      };
       await this.$axios
-        .$post(`${apiUrl}/api/v1/reviews`, data)
-        .then(function (response) {
+        .$post(url, methodParam.body, methodParam.headers)
+        .then(function(response) {
           console.log(response);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
+      // fetch(url, methodParam)
+      //   .then(response => console.log(response))
+      //   .catch(function(error) {
+      //     console.log(error);
+      //   });
 
       this.fetchReviews();
       this.resetForm();
@@ -239,10 +261,10 @@ export default {
         userName: null,
         country: null,
         ratingScore: null,
-        body: null,
+        review: null
       };
-    },
-  },
+    }
+  }
 };
 </script>
 

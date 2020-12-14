@@ -12,6 +12,9 @@ apiEndpoints:
   elastic:
     host: "*"
     paths: ["/search", "/search/*"]
+  camunda:
+    host: localhost
+    paths: ["/*", "/engine-rest/", "/engine-rest/"]
 serviceEndpoints:
   httpbin:
     url: "https://httpbin.org"
@@ -19,6 +22,8 @@ serviceEndpoints:
     url: "http://nodeexpressmongodb:8200"
   elasticService:
     url: "http://elasticnode:9000"
+  camunda-service:
+    url: "http://camunda-service:8081"
 policies:
   - basic-auth
   - cors
@@ -58,4 +63,18 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: elasticService
+              changeOrigin: true
+  camundaPipeline:
+    apiEndpoints:
+      - camunda
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - cors:
+          - action:
+              origin: true
+              methods: "HEAD,PUT,PATCH,POST,DELETE"
+      - proxy:
+          - action:
+              serviceEndpoint: camunda-service
               changeOrigin: true
