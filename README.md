@@ -10,7 +10,7 @@
 
 gameRev is a game review platform, where people from all around the world can read and write reviews for their favorite games. New features include game guides and game prices.
 
-![gameRev architectural diagram](GameRevArchitecturalDiagram.png)
+![gameRev architectural diagram](gameRevArchitecturalDiagramV2.png)
 
 This architecural diagram shows our architecture, and how our different applications communicate. We have a monolithic application, that includes our frontend, backend and our database, this is the base application. We also have a BPMN service that takes reviews before they are saved, and checks them in a profanity filter, before sending them to the backend.
 Then we have a microservice setup, that combines the two microservices nodeCRUD and nodeElasticSearch, by taking game guides from the nodeCRUD service and using them in the nodeElasticSearch, and then serving them via the API Gateway. The last application we have is the webscraping service, that webscrapes game prices and number of units sold, and via the RabbitMQ broker, sends this data out to our REST backend.
