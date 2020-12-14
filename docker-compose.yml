@@ -1,5 +1,16 @@
 version: "3"
 services:
+  expressgateway:
+    image: expressgateway
+    build:
+      context: ./GameRev-Microservices/ .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8100:8100
+    networks:
+      - esnet
   frontend:
     container_name: nuxtfrontend
     image: node:14.13.0-stretch

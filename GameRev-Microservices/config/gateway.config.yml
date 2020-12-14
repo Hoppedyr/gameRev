@@ -2,24 +2,23 @@ http:
   port: 8100
 admin:
   port: 9876
-  host: localhost
 apiEndpoints:
   api:
-    host: localhost
+    host: "*"
     paths: "/ip"
   gameguide:
-    host: localhost
+    host: "*"
     paths: ["/api/gameguide", "/api/gameguide/*"]
   elastic:
-    host: localhost
+    host: "*"
     paths: ["/search", "/search/*"]
 serviceEndpoints:
   httpbin:
     url: "https://httpbin.org"
   gameguideService:
-    url: "http://localhost:8200"
+    url: "http://nodeexpressmongodb:8200"
   elasticService:
-    url: "http://localhost:9000"
+    url: "http://elasticnode:9000"
 policies:
   - basic-auth
   - cors
