@@ -11,10 +11,11 @@ services:
       - 8100:8100
     networks:
       - esnet
+
   frontend:
     container_name: nuxtfrontend
     image: node:14.13.0-stretch
-    command: npm run dev
+    command: bash -c "npm i && npm run dev"
     volumes:
       - ./gameRev-Frontend:/usr/src/app
     working_dir: /usr/src/app
@@ -54,14 +55,12 @@ services:
       - ~/.m2:/root/.m2
     working_dir: /app
     ports:
-      - 8080:8080
+      - 8089:8089
     command: mvn clean spring-boot:run
     environment:
       - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mysql
-    networks:
-      - esnet
 
   rabbitmq:
     image: rabbitmq:3-management

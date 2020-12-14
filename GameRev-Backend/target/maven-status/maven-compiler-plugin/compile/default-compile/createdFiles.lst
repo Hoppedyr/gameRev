@@ -9,5 +9,5 @@ dk/springboot/restful/review/ReviewService.class
 dk/springboot/restful/flag/FlagService.class
 dk/springboot/restful/review/Review.class
 dk/springboot/restful/webscrape/WebscrapeListener.class
-dk/springboot/restful/user/UserApi.class
 dk/springboot/restful/Application.class
+dk/springboot/restful/user/UserApi.class

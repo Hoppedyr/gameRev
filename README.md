@@ -13,7 +13,7 @@ gameRev is a game review platform, where people from all around the world can re
 ![gameRev architectural diagram](GameRevArchitecturalDiagram.png)
 
 This architecural diagram shows our architecture, and how our different applications communicate. We have a monolithic application, that includes our frontend, backend and our database, this is the base application. We also have a BPMN service that takes reviews before they are saved, and checks them in a profanity filter, before sending them to the backend.
-Then we have a microservice setup, that combines the two microservices nodeCRUD and nodeElasticSearch, by taking game guides from the nodeCRUD service and using them in the nodeElasticSearch, and then serving them via the API Gateway. The last application we have is the webscraping service, that webscrapes game prices and number of units sold, and via the RabbitMQ broker, sends this data out to our REST backend. 
+Then we have a microservice setup, that combines the two microservices nodeCRUD and nodeElasticSearch, by taking game guides from the nodeCRUD service and using them in the nodeElasticSearch, and then serving them via the API Gateway. The last application we have is the webscraping service, that webscrapes game prices and number of units sold, and via the RabbitMQ broker, sends this data out to our REST backend.
 
 <br>
 
@@ -64,6 +64,7 @@ We are using BPMN to check for profanities in our reviews, before they are poste
 We have used a python script to webscrape from SteamSpy, and retrieve game prices and how many units that the game has sold. We used RabbitMQ as the broker that takes care of the communication between our backend and our webscraper script using the AMQP protocol.
 
 [Further Webscraping Documentation](https://github.com/Hoppedyr/gameRev/tree/main/GameRev-Webscraping)
+
 <br>
 
 ### Microservices
@@ -78,8 +79,8 @@ We have made a MongoDB CRUD application to make and save game guides, and we hav
 
 ### Everything we have made has been put in a Docker Container, which will run everything needed.
 
-- Frontend: [localhost:3000](http://localhost:3000)  
-- Backend API: [localhost:8080](http://localhost:8080)  
+- Frontend: [localhost:3000](http://localhost:3000)
+- Backend API: [localhost:8089](http://localhost:8089)
 - Backend PHPAdmin: [localhost:8082](http://localhost:8082)
 - MySQL DB: [localhost:3306](http://localhost:3306)
 - RabbitMQ Server: [localhost:15672](http://localhost:15762)
@@ -89,14 +90,12 @@ We have made a MongoDB CRUD application to make and save game guides, and we hav
 - Elastic Search: [localhost:9200](http://localhost:9200)
 - MongoDB: [localhost:27017](http://localhost:27017)
 
-
 ### Non-Dockerized Services:
 
 - API Gateway: [localhost:8100](http://localhost:8100)
 
-
-
 Login credentials:
+
 - PHPAdmin (username: root, password: app)
 - RabbitMQ (username: guest, password: guest)
 
@@ -120,18 +119,6 @@ $ docker-compose up -d
 ```
 
 ### STEP 2:
-
-```bash
-# now we need to start the API Gateway that connects the frontend to the microservices
-
-$ cd GameRev-Microservices/
-
-# run this command and leave the console running
-$ npm install && npm start
-
-```
-
-### STEP 3:
 
 Go to the root project folder and run
 the file [indexing_and_webscrapingjob.bat](indexing_and_webscrapingjob.bat)

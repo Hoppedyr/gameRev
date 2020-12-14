@@ -1,18 +1,24 @@
-import fs from 'fs';
-import path from 'path';
-import { Client, logger, Variables } from 'camunda-external-task-client-js';
-import fetch from 'node-fetch';
-import { CAMUNDA_URL } from './constants';
+import fs from "fs";
+import path from "path";
+import { Client, logger, Variables } from "camunda-external-task-client-js";
+import fetch from "node-fetch";
+import { CAMUNDA_URL } from "./constants";
 
-const config = { baseUrl: CAMUNDA_URL, use: logger, asyncResponseTimeout: 10000 };
+const config = {
+  baseUrl: CAMUNDA_URL,
+  use: logger,
+  asyncResponseTimeout: 10000,
+};
 
 const client = new Client(config);
 
-const profanityWords = fs.readFileSync(path.join(__dirname, '..', 'bad-words.txt'), 'utf-8').split('|');
+const profanityWords = fs
+  .readFileSync(path.join(__dirname, "..", "bad-words.txt"), "utf-8")
+  .split("|");
 
 // console.log(profanityWords);
 
-client.subscribe('check-profanity', async function ({ task, taskService }) {
+client.subscribe("check-profanity", async function ({ task, taskService }) {
   // Put your business logic here
 
   try {
@@ -20,10 +26,10 @@ client.subscribe('check-profanity', async function ({ task, taskService }) {
     const review: string = await vars.review;
     let hasProfanity: boolean = false;
 
-    console.log('checking for profanity');
+    console.log("checking for profanity");
 
     const checkProfanity = (profanity, text) => {
-      return new RegExp(`(${profanity})`, 'gi').test(text);
+      return new RegExp(`(${profanity})`, "gi").test(text);
     };
 
     for (let i = 0; i < profanityWords.length; i++) {
@@ -35,7 +41,10 @@ client.subscribe('check-profanity', async function ({ task, taskService }) {
 
     console.log(vars);
 
-    const processVariables = new Variables().setAll(vars).set('hasProfanity', hasProfanity).set('approved', false);
+    const processVariables = new Variables()
+      .setAll(vars)
+      .set("hasProfanity", hasProfanity)
+      .set("approved", false);
     // Complete the task
     // complete the task
 
@@ -45,17 +54,17 @@ client.subscribe('check-profanity', async function ({ task, taskService }) {
   }
 });
 
-client.subscribe('approved-review', function ({ task, taskService }) {
+client.subscribe("approved-review", function ({ task, taskService }) {
   // Put your business logic here
 
   try {
     const vars = task.variables.getAll();
 
     // Send a request to the database
-    fetch(`http://localhost:8080/api/v1/reviews`, {
-      method: 'POST',
+    fetch(`http://localhost:8089/api/v1/reviews`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         game_id: vars.game_id,
@@ -67,7 +76,9 @@ client.subscribe('approved-review', function ({ task, taskService }) {
     })
       .then((e) => {
         console.log(e);
-        console.log(`saving id2: ${task.processInstanceId} with review ${vars.review}, to database`);
+        console.log(
+          `saving id2: ${task.processInstanceId} with review ${vars.review}, to database`
+        );
       })
       .catch((error) => console.error(error))
       .finally(() => {
