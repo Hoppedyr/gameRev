@@ -84,15 +84,13 @@ We have made a MongoDB CRUD application to make and save game guides, and we hav
 - Backend PHPAdmin: [localhost:8082](http://localhost:8082)
 - MySQL DB: [localhost:3306](http://localhost:3306)
 - RabbitMQ Server: [localhost:15672](http://localhost:15762)
+- API Gateway: [localhost:8100](http://localhost:8100)
 - NodeCRUD Mongo Microservice: [localhost:8200](http://localhost:8200)
 - MongoDB: [localhost:27017](http://localhost:27017)
 - NodeElasticSearch Microservice: [localhost:9000](http://localhost:9000)
 - Elastic Search: [localhost:9200](http://localhost:9200)
-- MongoDB: [localhost:27017](http://localhost:27017)
-
-### Non-Dockerized Services:
-
-- API Gateway: [localhost:8100](http://localhost:8100)
+- Camunda: [localhost:8081](http://localhost:8081)
+- Camunda Service: [localhost:80](http://localhost:80)
 
 Login credentials:
 
