@@ -89,13 +89,14 @@ We have made a MongoDB CRUD application to make and save game guides, and we hav
 - MongoDB: [localhost:27017](http://localhost:27017)
 - NodeElasticSearch Microservice: [localhost:9000](http://localhost:9000)
 - Elastic Search: [localhost:9200](http://localhost:9200)
-- Camunda: [localhost:8081](http://localhost:8081)
+- Camunda: [localhost:8081](http://localhost:8081/camunda)
 - Camunda Service: [localhost:80](http://localhost:80)
 
 Login credentials:
 
 - PHPAdmin (username: root, password: app)
 - RabbitMQ (username: guest, password: guest)
+- Camunda (username: demo, password: demo)
 
 <br>
 
