@@ -23,7 +23,7 @@ serviceEndpoints:
   elasticService:
     url: "http://elasticnode:9000"
   camunda-service:
-    url: "http://camunda-service:8081"
+    url: "http://camunda-service:8080"
 policies:
   - basic-auth
   - cors
