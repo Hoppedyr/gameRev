@@ -123,12 +123,21 @@ the file [indexing_and_webscrapingjob.bat](indexing_and_webscrapingjob.bat)
 
 OR
 
+Go to the root project folder and run these in your console
+
 ```bash
 # this command imports data and indexes it in Elastic Search
 $ docker exec -it gamerev_elasticnode_1 node data.js
 
 # this command starts our webscraping job, that runs every 10 min, so keep it running
 $ python GameRev-Webscraping/GameRevWebscrape.py
+```
+
+Here is the requirements.txt for the python program, if needed:
+
+```bash
+# do this from the root project folder
+$ pip install -r GameRev-Webscraping/requirements.txt
 ```
 
 <br>
