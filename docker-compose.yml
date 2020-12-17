@@ -3,7 +3,7 @@ services:
   expressgateway:
     image: expressgateway
     build:
-      context: ./GameRev-Microservices/ .
+      context: ./GameRev-Microservices/
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
@@ -23,6 +23,8 @@ services:
       - "3000:3000"
     environment:
       HOST: 0.0.0.0
+    networks:
+      - esnet
 
   mysql:
     container_name: mysql
@@ -36,6 +38,8 @@ services:
     ports:
       - "3306:3306"
     restart: always
+    networks:
+      - esnet
 
   phpmyadmin:
     container_name: phpadmin
@@ -47,6 +51,8 @@ services:
       - "8082:80"
     environment:
       PMA_HOST: mysql
+    networks:
+      - esnet
 
   springbootintegration:
     build: .
@@ -61,6 +67,8 @@ services:
       - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - mysql
+    networks:
+      - esnet
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -71,11 +79,13 @@ services:
       - 15691:15691
       - 15692:15692
       - 25672:25672
+    networks:
+      - esnet
 
   nodeexpressmongodb:
     image: nodeexpressmongodb
     build:
-      context: ./GameRev-Microservices/Microservices/expressMongoCrud/ .
+      context: ./GameRev-Microservices/Microservices/expressMongoCrud/
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
@@ -96,7 +106,7 @@ services:
   elasticnode:
     image: elasticnode
     build:
-      context: ./GameRev-Microservices/Microservices/Elastic-node/ .
+      context: ./GameRev-Microservices/Microservices/Elastic-node/
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
@@ -124,9 +134,6 @@ services:
   camunda:
     image: camunda/camunda-bpm-platform:latest
     container_name: camunda-service
-    # /camunda/webapps/host-manager/WEB-INF
-    # volumes:
-    #   - ./web.xml:/camunda/webapps/host-manager/WEB-INF/web.xml
     ports:
       - 8081:8080
     networks:
