@@ -51,9 +51,10 @@ Our Java backend uses PHPAdmin to communicate with the MySQL database, this tool
 
 <br>
 
-### BPMN
+### Camunda
 
-We are using BPMN to check for profanities in our reviews, before they are posted.
+We are using Camunda to check for profanities in our reviews before they have been comitted to the database. In case they contain profanities camunda 
+will catch them and wait for an approval from an admin.
 
 [Further BPMN Documentation](https://github.com/Hoppedyr/gameRev/tree/main/GameRev-Camunda)
 
