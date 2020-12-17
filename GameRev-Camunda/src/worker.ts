@@ -55,8 +55,10 @@ client.subscribe('approved-review', function ({ task, taskService }) {
   try {
     const vars = task.variables.getAll();
 
+    console.log(vars);
+
     // Send a request to the database
-    fetch(`http://localhost:8089/api/v1/reviews`, {
+    fetch(`http://springbootintegration:8089/api/v1/reviews`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +68,7 @@ client.subscribe('approved-review', function ({ task, taskService }) {
         userName: vars.userName,
         country: vars.country,
         ratingScore: Number(vars.ratingScore),
-        review: vars.review,
+        body: vars.review,
       }),
     })
       .then((e) => {

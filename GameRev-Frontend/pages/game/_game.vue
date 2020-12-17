@@ -26,7 +26,7 @@
             <textarea
               class="form-control"
               rows="3"
-              v-model="review.review"
+              v-model="review.body"
               placeholder="Write a review of the game here..."
             ></textarea>
           </div>
@@ -127,7 +127,7 @@
                   }}
                 </p>
                 <p>Review:</p>
-                {{ review.review }}
+                {{ review.body }}
               </div>
             </div>
           </div>
@@ -191,13 +191,6 @@ export default {
     },
     async submit() {
       // console.log(this.review);
-      const data = {
-        game_id: this.id,
-        userName: this.review.userName,
-        country: this.review.country,
-        ratingScore: this.review.ratingScore,
-        review: this.review.review
-      };
 
       // await this.$axios
       //   .$post(`${apiUrl}/api/v1/reviews`, data)
@@ -217,23 +210,23 @@ export default {
         body: JSON.stringify({
           variables: {
             game_id: {
-              value: data.game_id,
+              value: this.id,
               type: "string"
             },
             review: {
-              value: data.review,
+              value: this.review.body,
               type: "string"
             },
             country: {
-              value: data.country,
+              value: this.review.country,
               type: "string"
             },
             ratingScore: {
-              value: data.ratingScore,
+              value: this.review.ratingScore,
               type: "string"
             },
             userName: {
-              value: data.userName,
+              value: this.review.userName,
               type: "string"
             }
           }
@@ -253,7 +246,9 @@ export default {
       //     console.log(error);
       //   });
 
-      this.fetchReviews();
+      setTimeout(() => {
+        this.fetchReviews();
+      }, 300);
       this.resetForm();
     },
     resetForm() {
@@ -261,7 +256,7 @@ export default {
         userName: null,
         country: null,
         ratingScore: null,
-        review: null
+        body: null
       };
     }
   }
