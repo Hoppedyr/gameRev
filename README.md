@@ -1,4 +1,4 @@
-# Team 5 - #IkkeForLangt
+# Team 5 -  #IkkeForLangt
 
 - Andreas Guldborg Heick - cph-ah384@cphbusiness.dk
 - Rasmus Jarnborg Friis - cph-rf43@cphbusiness.dk
